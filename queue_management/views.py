@@ -13,6 +13,11 @@ global avg_time
 deposit_queue, deposit_queue_1 = [], []
 avg_time = 1
 
+def index(request):
+    return render(request,'login.html')
+
+def signup(request):
+    return render(request,'signup.html')
 
 @csrf_exempt
 def sign_up(request):
@@ -25,7 +30,7 @@ def sign_up(request):
         user = models.User(first_name=first_name, last_name=last_name,
                            password=password, mobile_no=mobile_no)
         user.save()
-        return HttpResponse('Successfull')
+        return render(request,'login.html')
 
     except:
         return HttpResponse('user_exsist')
@@ -40,18 +45,18 @@ def sign_in(request):
     sess = request.session.get('login', False)
     print(sess)
     if sess:
-        return HttpResponse('Already login')
+        return render(request,'detail.html')
 
     if len(auth) != 0:
         if auth[0].password == password:
             request.session['mobile_no'] = mobile_no
             request.session['login'] = True
             print(request.session['mobile_no'], request.session['login'])
-            return HttpResponse('Welcome ' + auth[0].first_name + ' ' + auth[0].last_name)
+            return render(request,'detail.html')
         else:
-            return HttpResponse("password is wrong")
+            return render(request,'password_error.html')
     else:
-        return HttpResponse(mobile_no + " Not Exsist")
+        return render(request,'username_error.html')
 
 @csrf_exempt
 def create_ticket(request):
@@ -68,12 +73,12 @@ def create_ticket(request):
     active = 1
     ticket = models.Ticket(customer_id=models.User.objects(mobile_no = 8596025075)[0].id, type_transcation=type_transcation, responese_time=responese_time,
                     resolved_time=resolved_time, counter_id=counter_id, ETA=ETA, expire_time=expire_time, active=active)
-    ticket.save()
+    # ticket.save()
     try:
         ticket.save()
         deposit_queue.append([ticket.id,ticket.responese_time,ticket.ETA])
         print(deposit_queue)
-        return HttpResponse('Successfull')
+        return HttpResponse('Successfull '+ticket.id)
     except:
         return HttpResponse('Failed')
 

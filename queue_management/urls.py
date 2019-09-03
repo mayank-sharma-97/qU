@@ -9,6 +9,8 @@ urlpatterns = [
     path('check_queue', views.check_queue, name='check_queue'),
     path('Processed', views.clear_ticket, name='check_queue'),
     path('', views.index, name='signin'),
-    path('signup', views.signup, name='signup')
+    path('signup', views.signup, name='signup'),
+    path('signout', views.signout, name='signout'),
+
 
 ]

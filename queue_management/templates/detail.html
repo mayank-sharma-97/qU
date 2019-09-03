@@ -199,6 +199,11 @@
   <title>Create New Account</title>
 
 <body>
+  <script type="text/javascript">
+    function signout() {
+      window.location.href = "http://127.0.0.1:8000/bank/signout"
+    }
+  </script>
 
   <div id="container_signup">
     <form action="ticket_gen" method="POST">
@@ -206,8 +211,15 @@
       <input type="text" id="customer_id" name="customer_id">
       <label for="lastname">Type of Transcation:</label>
       <input type="text" id="type_transcation" name="type_transcation">
+      <label for="mobile_no">Mobile Number:</label>
+      <input type="text" id="customer_id" name="customer_id">
+      <label for="lastname">Type of Transcation:</label>
+      <input type="text" id="type_transcation" name="type_transcation">
       <div id="lower">
         <input type="submit" value="generate">
+      </div>
+      <div id="lower">
+        <input type="button" value="Logout" onclick="signout()">
       </div>
     </form>
   </div>

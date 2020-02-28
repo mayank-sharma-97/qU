@@ -27,4 +27,4 @@ Here are the steps for a walk-in customer to make a Deposit Transaction:
 
 ### Data Model
 
-![./datamodel.png]
+![Data Model](/datamodel.png)

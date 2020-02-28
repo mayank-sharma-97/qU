@@ -28,7 +28,7 @@ def signup(request):
 
 def signout(request):
     print(request.session.get('mobile_no', 'Not username'))
-    if request.ses sion.get('login', False) == False:
+    if request.session.get('login', False) == False:
         return render(request, 'login.html')
     request.session['login'] = False
     return HttpResponse('logout :' + request.session['mobile_no'])
@@ -78,7 +78,7 @@ def sign_in(request):
 def create_ticket(request):
     # print(request.session['mobile_no'])
     global deposit_queue
-    customer_id = request.POST['customer_id']
+    customer_id = int(request.POST['customer_id'])
     type_transcation = request.POST['type_transcation']
     responese_time = datetime.datetime.now()
     resolved_time = datetime.datetime.now()
@@ -88,7 +88,7 @@ def create_ticket(request):
     expire_time = datetime.datetime.now() + datetime.timedelta(minutes=len(deposit_queue)
                                                                * avg_time) + datetime.timedelta(minutes=2)
     active = 1
-    ticket = models.Ticket(customer_id=models.User.objects(mobile_no=8596025075)[0].id, type_transcation=type_transcation, responese_time=responese_time,
+    ticket = models.Ticket(customer_id=models.User.objects(mobile_no=customer_id)[0].id, type_transcation=type_transcation, responese_time=responese_time,
                            resolved_time=resolved_time, counter_id=counter_id, ETA=ETA, expire_time=expire_time, active=active)
     # ticket.save()
     try:
@@ -96,7 +96,8 @@ def create_ticket(request):
         deposit_queue.append([ticket.id, ticket.responese_time, ticket.ETA])
         print(deposit_queue)
         return HttpResponse('Successfull ' + ticket.id)
-    except:
+    except Exception as e:
+        print(e)
         return HttpResponse('Failed')
 
 

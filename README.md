@@ -9,5 +9,9 @@ Developing Automated Queue Management System for Walk-In-Customer in the Branch 
 
 - Python 3.x
 - Django
+- MongoDB
 
-### 
+### Steps to Runserver
+1. Install Django by running :`pip install django` in terminal
+2. Install Mongo by runnning : `pip install mongoengine`
+3. Run `python manage.py runserver`
